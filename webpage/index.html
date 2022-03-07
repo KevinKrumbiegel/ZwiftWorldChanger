@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zwift World Changer</title>
+    <style>
+        html {
+            background-color: #222222;
+            color: white;
+            font-family: sans-serif;
+            height: 100%;
+            user-select: none;
+            width: 100%;
+        }
+
+        body {
+            background-color: #f26722;
+            box-sizing: border-box;
+            display: block;
+            height: 100%;
+            margin: 0 auto;
+            max-width: 600px;
+            min-width: 600px;
+            padding: 20px 0;
+        }
+
+        h1 {
+            margin: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            background-color: #01b2cc;
+            box-sizing: border-box;
+            height: 50px;
+            margin: 0;
+            text-align: center;
+            padding: 8px;
+        }
+
+        h2:hover {
+            background-color: #008fa5;
+        }
+
+        h2.error {
+            background-color: #b50011;
+        }
+
+        div.copyright {
+            box-sizing: border-box;
+            font-size: small;
+            margin-top: 32px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        div.footer {
+            background-color: #444444;
+            bottom: 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            padding: 8px;
+            position: fixed;
+            text-align: center;
+            width: 600px;
+        }
+
+        div.world {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-color: #222222;
+            border-top-style: solid;
+            border-width: 2px;
+            box-sizing: border-box;
+            cursor: pointer;
+            padding: 0;
+            min-height: 5vh;
+            width: 100%;
+        }
+
+        div.world:last-of-type {
+            border-bottom-style: solid;
+        }
+
+        div.world:hover {
+            background-color: black;
+        }
+
+        div.watopia {
+            background-image: url("res/watopia.jpg");
+        }
+
+        div.richmond {
+            background-image: url("res/richmond.jpg");
+        }
+
+        div.london {
+            background-image: url("res/london.jpg");
+        }
+
+        div.newyork {
+            background-image: url("res/newyork.jpg");
+        }
+
+        div.innsbruck {
+            background-image: url("res/innsbruck.jpg");
+        }
+
+        div.bolognatt {
+            background-image: url("res/bolognatt.jpg");
+        }
+
+        div.yorkshire {
+            background-image: url("res/yorkshire.jpg");
+        }
+
+        div.critcity {
+            background-image: url("res/critcity.jpg");
+        }
+
+        div.makuriislands {
+            background-image: url("res/makuriislands.jpg");
+        }
+
+        div.france {
+            background-image: url("res/france.jpg");
+        }
+
+        div.paris {
+            background-image: url("res/paris.jpg");
+        }
+    </style>
+    <script type="text/javascript" src="jquery-3.6.0.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        function on_sent_button_clicked(world_id) {
+            let message = '{"world_id": ' + world_id + '}'
+            let xhr = new XMLHttpRequest()
+            xhr.timeout = 1000
+            xhr.open("POST", "http://localhost:21899", true)
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onload = function() {
+                $("#worlds").fadeOut("slow", function() {($("#done").fadeIn())});
+                setTimeout(close_tab, 5000);
+            }
+
+            xhr.onerror = function() {
+                $("#worlds").fadeOut("slow", function() {($("#error").fadeIn())});
+            }
+
+            xhr.ontimeout = xhr.onerror
+
+            xhr.send(message)
+
+        }
+
+        function close_tab() {
+            window.close()
+        }
+    </script>
+    <script type="text/javascript">
+        function heartbeat() {
+            let xhr = new XMLHttpRequest()
+            xhr.open("HEAD", "http://localhost:21899")
+            xhr.send()
+
+            setTimeout(heartbeat, 1000)
+        }
+
+        heartbeat();
+    </script>
+    <h1>Zwift World Changer</h1>
+    <div id="worlds">
+        <div class="world watopia" onclick="on_sent_button_clicked(1)">
+            <h2>Watopia</h2>
+        </div>
+        <div class="world richmond" onclick="on_sent_button_clicked(2)">
+            <h2>Richmond</h2>
+        </div>
+        <div class="world london" onclick="on_sent_button_clicked(3)">
+            <h2>London</h2>
+        </div>
+        <div class="world newyork" onclick="on_sent_button_clicked(4)">
+            <h2>New York</h2>
+        </div>
+        <div class="world innsbruck" onclick="on_sent_button_clicked(5)">
+            <h2>Innsbruck</h2>
+        </div>
+        <!--<div class="world bolognatt" onclick="on_sent_button_clicked(6)">
+            <h2>Bologna TT</h2>
+        </div>-->
+        <div class="world yorkshire" onclick="on_sent_button_clicked(7)">
+            <h2>Yorkshire</h2>
+        </div>
+        <!--<div class="world critcity" onclick="on_sent_button_clicked(8)">
+            <h2>Crit City</h2>
+        </div>-->
+        <div class="world makuriislands" onclick="on_sent_button_clicked(9)">
+            <h2>Makuri Islands</h2>
+        </div>
+        <div class="world france" onclick="on_sent_button_clicked(10)">
+            <h2>France</h2>
+        </div>
+        <div class="world paris" onclick="on_sent_button_clicked(11)">
+            <h2>Paris</h2>
+        </div>
+    </div>
+    <div id="done" style="display: none" onclick="close_tab()">
+        <h2>Done.</h2>
+    </div>
+    <div id="error" style="display: none" onclick="close_tab()">
+        <h2 class="error">Error. 😑</h2>
+    </div>
+    <div class="copyright">
+        Tool developed by Kevin Krumbiegel. License: <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPL3</a>
+        <br/>Images: © 2022 Zwift
+    </div>
+    <div class="footer" onclick="close_tab()">
+        Close
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".world").mouseenter(function(event) {
+                $(event.currentTarget).stop().animate({
+                    height: "+300"
+                })
+            })
+            $(".world").mouseleave(function(event) {
+                $(event.currentTarget).stop().animate({
+                    height: "-300"
+                }, 1000)
+            })
+        })
+    </script>
+</body>
+</html>
