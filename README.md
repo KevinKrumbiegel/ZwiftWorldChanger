@@ -4,6 +4,10 @@ This tool can be used to easily change the active world in the virtual running a
 
 <img src="meta/screenshot.png" alt="screnshot of the tool" width="300px"></img>
 
+## Prerequisites
+The tool requires Windows and python3 installed on your device.
+You can get and install python3 from their official web page: https://www.python.org/downloads/
+
 ## Setup
 
 1. Download the latest release (on the right of this page)
